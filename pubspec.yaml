@@ -30,11 +30,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_chess_board: ^1.0.1
+  flutter_svg: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -88,3 +88,18 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+  - images/chess_board.png
+  - images/brown_board.png
+  - images/2.0x/brown_board.png
+  - images/3.0x/brown_board.png
+  - images/orange_board.png
+  - images/2.0x/orange_board.png
+  - images/3.0x/orange_board.png
+  - images/green_board.png
+  - images/2.0x/green_board.png
+  - images/3.0x/green_board.png
+  - images/dark_brown_board.png
+  - images/2.0x/dark_brown_board.png
+  - images/3.0x/dark_brown_board.png
+  - images/
