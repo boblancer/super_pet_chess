@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:super_pet_chess/board_hightlight.dart';
 import 'flutter_chess_board.dart';
 void main() {
   runApp(MaterialApp(
@@ -22,12 +23,40 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Chess Demo'),
       ),
-      body: Center(
-        child: ChessBoard(
-          controller: controller,
-          boardColor: BoardColor.orange,
-          boardOrientation: PlayerColor.white,
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: ChessBoard(
+                size: 3600,
+                controller: controller,
+                boardColor: BoardColor.orange,
+                arrows: [
+                  BoardArrow(
+                    from: 'd2',
+                    to: 'd4',
+                    color: Colors.red.withOpacity(0.8),
+                  ),
+                ],
+                boardOrientation: PlayerColor.white,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ValueListenableBuilder<Chess>(
+              valueListenable: controller,
+              builder: (context, game, _) {
+                return Text(
+                  controller.getSan().fold(
+                        '',
+                        (previousValue, element) =>
+                            previousValue + '\n' + (element ?? ''),
+                      ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

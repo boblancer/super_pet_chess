@@ -128,6 +128,15 @@ class ChessBoardController extends ValueNotifier<Chess> {
     return game.moves({'asObjects': true}) as List<Move>;
   }
 
+  List<Move> getPiecePossibleMoves(String boardSpace) {
+
+    var moves = game.moves({'asObjects': true})
+    .where((i) => 
+      i.from == game.getSquareId(boardSpace))
+    .toList();
+    return moves as List<Move>;
+  }
+
   int getMoveCount() {
     return game.move_number;
   }

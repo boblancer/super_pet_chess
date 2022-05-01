@@ -1,5 +1,8 @@
 library chess;
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+
 /*  Copyright (c) 2014, David Kopec (my first name at oaksnow dot com)
  *  Released under the MIT license
  *  https://github.com/davecom/chess.dart/blob/master/LICENSE
@@ -46,8 +49,10 @@ class Chess {
   };
 
   static const Map<PieceType, List<int>> PIECE_OFFSETS = {
-    KNIGHT: [-18, -33, -31, -14,  18, 33, 31,  14],
-    BISHOP: [-17, -15,  17,  15],
+    // KNIGHT: [-18, -33, -31, -14,  18, 33, 31,  14],
+    KNIGHT: [-34, -32, -30, 2, -2, 32, 34, 30],
+    // BISHOP: [-17, -15,  17,  15],
+    BISHOP: [-3, -18, -33, -48, -31, -14, 3, 18, 33, 48, 14, 31],
     ROOK: [-16,   1,  16,  -1],
     QUEEN: [-17, -16, -15,   1,  17, 16, 15,  -1],
     KING: [-17, -16, -15,   1,  17, 16, 15,  -1]
@@ -172,7 +177,7 @@ class Chess {
 
   /// Deep copy of the current Chess instance
   Chess copy() {
-    return Chess()
+    return Chess("")
       ..board = List<Piece?>.from(board)
       ..kings = ColorMap<int>.clone(kings)
       ..turn = turn
@@ -506,6 +511,10 @@ class Chess {
     return board[SQUARES[square]];
   }
 
+  int getSquareId(String square) {
+    return SQUARES[square];
+  }
+
   /// Put [piece] on [square]
   bool put(Piece piece, String square) {
     /* check for piece */
@@ -654,7 +663,7 @@ class Chess {
             }
 
             /* break, if knight or king */
-            if (piece.type == KNIGHT || piece.type == KING) break;
+            if (piece.type == KNIGHT || piece.type == KING || piece.type == BISHOP) break;
           }
         }
       }
@@ -1650,6 +1659,12 @@ class Move {
 
   String get toAlgebraic {
     return Chess.algebraic(to);
+  }
+
+  String boardPosition(){
+    var s = Chess.algebraic(to);
+    return Chess.algebraic(to);
+;
   }
 }
 
