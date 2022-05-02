@@ -20,7 +20,7 @@ class SvgWidgetFactory{
     String imageToDisplay = "";
 
     if (piece == "BR" || piece == "WR"){
-      imageToDisplay = PIECES_SVG["FISH"]!;
+      imageToDisplay = PIECES_SVG["CROCODILE"]!;
     }
     else if (piece == "BQ" || piece == "WQ"){
       imageToDisplay = PIECES_SVG["POODLE"]!;

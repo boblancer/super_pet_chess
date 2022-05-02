@@ -1651,7 +1651,9 @@ class Move {
   final PieceType piece;
   final PieceType? captured;
   final PieceType? promotion;
-  const Move(this.color, this.from, this.to, this.flags, this.piece, this.captured, this.promotion);
+  const Move(this.color, this.from, 
+  this.to, this.flags, this.piece, 
+  this.captured, this.promotion);
 
   String get fromAlgebraic {
     return Chess.algebraic(from);
@@ -1662,7 +1664,6 @@ class Move {
   }
 
   String boardPosition(){
-    var s = Chess.algebraic(to);
     return Chess.algebraic(to);
 ;
   }
@@ -1676,5 +1677,7 @@ class State {
   final int? ep_square;
   final int half_moves;
   final int move_number;
-  const State(this.move, this.kings, this.turn, this.castling, this.ep_square, this.half_moves, this.move_number);
+  const State(this.move, this.kings, this.turn, 
+  this.castling, this.ep_square, 
+  this.half_moves, this.move_number);
 }

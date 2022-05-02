@@ -1,7 +1,6 @@
 import 'chess.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
-import 'proxy.dart';
 
 class ChessBoardController extends ValueNotifier<Chess> {
   late Chess game;

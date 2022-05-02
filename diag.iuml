@@ -1,0 +1,227 @@
+@startuml
+set namespaceSeparator ::
+
+class "super_pet_chess::board_arrow.dart::BoardArrow" {
+  +String from
+  +String to
+  +Color color
+  +int hashCode
+  +bool ==()
+}
+
+class "super_pet_chess::board_hightlight.dart::BoardHighlight" {
+  +String at
+  +Color color
+}
+
+"super_pet_chess::board_hightlight.dart::BoardHighlight" o-- "dart::ui::Color"
+
+class "super_pet_chess::chess.dart::Chess" {
+}
+
+"super_pet_chess::chess.dart::Chess" o-- "super_pet_chess::chess.dart::Color"
+"super_pet_chess::chess.dart::Chess" o-- "super_pet_chess::chess.dart::PieceType"
+"super_pet_chess::chess.dart::Chess" o-- "super_pet_chess::chess.dart::ColorMap<int>"
+
+class "super_pet_chess::chess.dart::Piece" {
+  +PieceType type
+  +Color color
+}
+
+"super_pet_chess::chess.dart::Piece" o-- "super_pet_chess::chess.dart::PieceType"
+"super_pet_chess::chess.dart::Piece" o-- "super_pet_chess::chess.dart::Color"
+
+class "super_pet_chess::chess.dart::PieceType" {
+  +int shift
+  +String name
+  {static} +PieceType PAWN
+  {static} +PieceType KNIGHT
+  {static} +PieceType BISHOP
+  {static} +PieceType ROOK
+  {static} +PieceType QUEEN
+  {static} +PieceType KING
+  +int hashCode
+  +String toString()
+  +String toLowerCase()
+  +String toUpperCase()
+}
+
+"super_pet_chess::chess.dart::PieceType" o-- "super_pet_chess::chess.dart::PieceType"
+
+class "super_pet_chess::chess.dart::ColorMap" {
+  +T []()
+  +void []=()
+}
+
+class "super_pet_chess::chess.dart::Move" {
+  +Color color
+  +int from
+  +int to
+  +int flags
+  +PieceType piece
+  +PieceType? captured
+  +PieceType? promotion
+  +String fromAlgebraic
+  +String toAlgebraic
+  +String boardPosition()
+}
+
+"super_pet_chess::chess.dart::Move" o-- "super_pet_chess::chess.dart::Color"
+"super_pet_chess::chess.dart::Move" o-- "super_pet_chess::chess.dart::PieceType"
+
+class "super_pet_chess::chess.dart::State" {
+  +Move move
+  +ColorMap<int> kings
+  +Color turn
+  +ColorMap<int> castling
+  +int? ep_square
+  +int half_moves
+  +int move_number
+}
+
+"super_pet_chess::chess.dart::State" o-- "super_pet_chess::chess.dart::Move"
+"super_pet_chess::chess.dart::State" o-- "super_pet_chess::chess.dart::ColorMap<int>"
+"super_pet_chess::chess.dart::State" o-- "super_pet_chess::chess.dart::Color"
+
+class "super_pet_chess::chess.dart::Color" {
+  +int index
+  {static} +List<Color> values
+  {static} +Color WHITE
+  {static} +Color BLACK
+}
+
+"super_pet_chess::chess.dart::Color" o-- "super_pet_chess::chess.dart::Color"
+"dart::core::Enum" <|-- "super_pet_chess::chess.dart::Color"
+
+class "super_pet_chess::chess_board.dart::ChessBoard" {
+  +ChessBoardController controller
+  +double? size
++bool enableUserMoves
+  +BoardColor boardColor
+  +PlayerColor boardOrientation
+  +void Function()? onMove
+  +List<BoardArrow> arrows
+  +List<BoardHighlight> highlights
+  +bool dragging
+  +State<ChessBoard> createState()
+}
+
+"super_pet_chess::chess_board.dart::ChessBoard" o-- "super_pet_chess::chess_board_controller.dart::ChessBoardController"
+"super_pet_chess::chess_board.dart::ChessBoard" o-- "super_pet_chess::constants.dart::BoardColor"
+"super_pet_chess::chess_board.dart::ChessBoard" o-- "super_pet_chess::constants.dart::PlayerColor"
+
+class "super_pet_chess::chess_board.dart::_ChessBoardState" {
+  +Widget build()
+}
+
+class "super_pet_chess::chess_board.dart::BoardPiece" {
+  +String squareName
+  +Chess game
+  +Widget build()
+}
+
+"super_pet_chess::chess_board.dart::BoardPiece" o-- "super_pet_chess::chess.dart::Chess"
+
+class "super_pet_chess::chess_board.dart::PieceMoveData" {
+  +String squareName
+  +String pieceType
+  +Color pieceColor
+}
+
+"super_pet_chess::chess_board.dart::PieceMoveData" o-- "super_pet_chess::chess.dart::Color"
+
+class "super_pet_chess::chess_board.dart::_BoardPainter" {
+  +List<BoardHighlight> arrows
+  +PlayerColor boardOrientation
+  +void paint()
+  +bool shouldRepaint()
+}
+
+"super_pet_chess::chess_board.dart::_BoardPainter" o-- "super_pet_chess::constants.dart::PlayerColor"
+
+class "super_pet_chess::chess_board_controller.dart::ChessBoardController" {
+  +Chess game
+  +String piece_replacement
+  +void makeMove()
+  +void makeMoveWithPromotion()
+  +void makeMoveWithNormalNotation()
+  +void undoMove()
+  +void resetBoard()
+  +void clearBoard()
+  +void putPiece()
+  +void loadPGN()
+  +void loadFen()
+  +bool isInCheck()
+  +bool isCheckMate()
+  +bool isDraw()
+  +bool isStaleMate()
+  +bool isThreefoldRepetition()
+  +bool isInsufficientMaterial()
+  +bool isGameOver()
+  +String getAscii()
+  +String getFen()
+  +List<String?> getSan()
+  +List<Piece?> getBoard()
+  +List<Move> getPossibleMoves()
+  +List<Move> getPiecePossibleMoves()
+  +int getMoveCount()
+  +int getHalfMoveCount()
+}
+
+"super_pet_chess::chess_board_controller.dart::ChessBoardController" o-- "super_pet_chess::chess.dart::Chess"
+
+class "super_pet_chess::constants.dart::BoardColor" {
+  +int index
+  {static} +List<BoardColor> values
+  {static} +BoardColor brown
+  {static} +BoardColor darkBrown
+  {static} +BoardColor orange
+  {static} +BoardColor green
+}
+
+"super_pet_chess::constants.dart::BoardColor" o-- "super_pet_chess::constants.dart::BoardColor"
+"dart::core::Enum" <|-- "super_pet_chess::constants.dart::BoardColor"
+
+class "super_pet_chess::constants.dart::PlayerColor" {
+  +int index
+  {static} +List<PlayerColor> values
+  {static} +PlayerColor white
+  {static} +PlayerColor black
+}
+
+"super_pet_chess::constants.dart::PlayerColor" o-- "super_pet_chess::constants.dart::PlayerColor"
+"dart::core::Enum" <|-- "super_pet_chess::constants.dart::PlayerColor"
+
+class "super_pet_chess::constants.dart::BoardPieceType" {
+  +int index
+  {static} +List<BoardPieceType> values
+  {static} +BoardPieceType Pawn
+  {static} +BoardPieceType Rook
+  {static} +BoardPieceType Knight
+  {static} +BoardPieceType Bishop
+  {static} +BoardPieceType Queen
+  {static} +BoardPieceType King
+}
+
+"super_pet_chess::constants.dart::BoardPieceType" o-- "super_pet_chess::constants.dart::BoardPieceType"
+"dart::core::Enum" <|-- "super_pet_chess::constants.dart::BoardPieceType"
+
+class "super_pet_chess::main.dart::HomePage" {
+  +_HomePageState createState()
+}
+
+
+class "super_pet_chess::main.dart::_HomePageState" {
+  +ChessBoardController controller
+  +Widget build()
+}
+
+"super_pet_chess::main.dart::_HomePageState" o-- "super_pet_chess::chess_board_controller.dart::ChessBoardController"
+
+class "super_pet_chess::pet.dart::SvgWidgetFactory" {
+  {static} +Map<String, String> PIECES_SVG
+  {static} +Widget fromPieceName()
+}
+
+
+@enduml

@@ -29,8 +29,6 @@ class ChessBoard extends StatefulWidget {
 
   final VoidCallback? onMove;
 
-  final List<BoardArrow> arrows;
-
   late List<BoardHighlight> highlights;
 
   late bool dragging;
@@ -43,7 +41,6 @@ class ChessBoard extends StatefulWidget {
     this.boardColor = BoardColor.green,
     this.boardOrientation = PlayerColor.white,
     this.onMove,
-    this.arrows = const [],
     this.highlights = const [],
     this.dragging = false,
 
@@ -180,7 +177,7 @@ class _ChessBoardState extends State<ChessBoard> {
                     child: CustomPaint(
                       child: Container(),
                       painter:
-                          _ArrowPainter(widget.highlights, widget.boardOrientation),
+                          _BoardPainter(widget.highlights, widget.boardOrientation),
                     ),
                   ),
                 ),
@@ -305,22 +302,22 @@ class PieceMoveData {
   });
 }
 
-class _ArrowPainter extends CustomPainter {
-  List<BoardHighlight> arrows;
+class _BoardPainter extends CustomPainter {
+  List<BoardHighlight> hightlights;
   PlayerColor boardOrientation;
 
-  _ArrowPainter(this.arrows, this.boardOrientation);
+  _BoardPainter(this.hightlights, this.boardOrientation);
 
   @override
   void paint(Canvas canvas, Size size) {
     var blockSize = size.width / 8;
     var halfBlockSize = size.width / 16;
 
-    for (var arrow in arrows) {
-      var startFile = files.indexOf(arrow.at[0]);
-      var startRank = int.parse(arrow.at[1]) - 1;
-      var endFile = files.indexOf(arrow.at[0]);
-      var endRank = int.parse(arrow.at[1]) - 1;
+    for (var h in hightlights) {
+      var startFile = files.indexOf(h.at[0]);
+      var startRank = int.parse(h.at[1]) - 1;
+      var endFile = files.indexOf(h.at[0]);
+      var endRank = int.parse(h.at[1]) - 1;
 
       int effectiveRowStart = 0;
       int effectiveColumnStart = 0;
@@ -344,7 +341,7 @@ class _ArrowPainter extends CustomPainter {
           ((effectiveRowStart) * blockSize) );
       var paint = Paint()
         ..strokeWidth = blockSize
-        ..color = arrow.color;
+        ..color = h.color;
       canvas.drawRect(startOffset & Size(blockSize, blockSize), paint);
     }
   }
@@ -366,7 +363,7 @@ class _ArrowPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_ArrowPainter oldDelegate) {
-    return arrows != oldDelegate.arrows;
+  bool shouldRepaint(_BoardPainter oldDelegate) {
+    return hightlights != oldDelegate.hightlights;
   }
 }
